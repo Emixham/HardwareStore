@@ -72,7 +72,7 @@ public class HardwareStore extends JFrame
    private JMenu fileMenu, viewMenu, optionsMenu, toolsMenu,
            helpMenu, aboutMenu ;
    private JMenuItem eMI ;
-   private JMenuItem lmMI, lmtMI, hdMI, dpMI, hamMI, csMI, tabMI, bandMI,
+   private JMenuItem lmMI, lmtMI, hdMI, dpMI, hamMI, csMI, tabMI, bandMI, 
                sandMI, stapMI, wdvMI, sccMI;
    private JMenuItem deleteMI, addMI, updateMI, listAllMI ;
    private JMenuItem debugON, debugOFF ;
