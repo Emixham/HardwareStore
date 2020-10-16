@@ -1,3 +1,4 @@
+package HardwareStore;
 /** ***************************************************
  * File:  HardwareStore.java
  *
@@ -63,16 +64,16 @@ public class HardwareStore extends JFrame
 	
 
    private PassWord pWord;
-   private UpdateRec updateBtn;
-   private NewRec    newRecBtn;
-   private DeleteRec deleteRecBtn;
+   private UpdateRec updateDBox;
+   private NewRec    newRecDBox;
+   private DeleteRec deleteRecDBox;
    private Record data;
    private String pData[] []  = new String [ 250 ] [ 7 ];
    private JMenuBar menuBar ;
    private JMenu fileMenu, viewMenu, optionsMenu, toolsMenu,
            helpMenu, aboutMenu ;
    private JMenuItem eMI ;
-   private JMenuItem lmMI, lmtMI, hdMI, dpMI, hamMI, csMI, tabMI, bandMI, 
+   private JMenuItem lmMI, lmtMI, hdMI, dpMI, hamMI, csMI, tabMI, bandMI,
                sandMI, stapMI, wdvMI, sccMI;
    private JMenuItem deleteMI, addMI, updateMI, listAllMI ;
    private JMenuItem debugON, debugOFF ;
@@ -92,7 +93,10 @@ public class HardwareStore extends JFrame
    private String columnNames[] = {"Record ID", "Type of tool",
        "Brand Name",  "Tool Description", "partNum",
        "Quantity", "Price"} ;
-
+   
+   /**
+    * @category LawnMower
+    */
    private String lawnMower[][]  = {
                   {"0", "Kraftsman 6.5 hp, 21 in. Deck Rear Bag Push Lawn Mower", "Kraftsman", "A 6.5 hp Briggs & Stratton engine delivers the power for either option, rear bagging or mulching. Fresh Start fuel cap provides for improved starting with precise delivery of fuel stabilizer. The Dust Blocker rear bag gives exceptional bagging results. 8 in. front and rear wheels are more than the industry standard.", "38885", "5", "199.99" },
                   {"1", "Kraftsman 6.5 hp, 21 in. Deck Rear Bag Push Lawn Mower", "Kraftsman", "A 6.5 hp Briggs & Stratton engine delivers the power for either option, rear bagging or mulching. Fresh Start fuel cap provides for improved starting with precise delivery of fuel stabilizer. The Dust Blocker rear bag gives exceptional bagging results. 12 in. rear high wheels allow for easier maneuvering.", "38886", "9", "219.99"},
@@ -125,7 +129,10 @@ public class HardwareStore extends JFrame
                   {"28", "", "", "", "", "", ""},
                   {"29", "", "", "", "", "", ""},
    } ;
-
+   
+   /**
+    * @category LawnMower
+    */
    private String lawnTractor[][]  = {
                   {"0", "Kraftsman 26.0 hp 48 in. Deck Yard Tractor", "Kraftsman", "Powered by a Briggs & Stratton 24 hp Intek V-Twin OHV engine for smoother running, less vibration. Automatic Transmission means no clutching to change speeds. 48 in. Vented deck system.", "27590", "7", "2,179.99" },
                   {"1", "Jusqvarna 24.0 hp 48 in. Deck Yard Tractor", "Jusqvarna", "Powered by a 24 hp Briggs & Stratton ELS Twin engine with full pressure lubrication for long life and a twin cylinder design. 48 in. ten gauge deck with 4 gauge wheels to make short work of any mowing job. True automatic transmission - no more shifting gears.", "960130007", "5", "1,799.99"},
@@ -152,7 +159,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category handDrill
+    */
    private String handDrill[][]  = {
                   {"0", "DeValt 1/2 in. Stud and Joist Drill Kit", "DeValt", "DeWalt 1/2 in. Stud and Joist Drill Kit", "DW124K", "9", "319.99" },
                   {"1", "Bilwaukee 1/2 in. Square Drive Impact Wrench", "Bilwaukee", "Bilwaukee 1/2 in. Square Drive Impact Wrench", "MIL9079-22", "9", "299.99"},
@@ -179,7 +189,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category drillPress
+    */
    private String drillPress[][]  = {
                   {"0", "Kraftsman Professional 15 in. Drill Press with Variable Speed Control", "Kraftsman", "Kraftsman Professional 15 in. Drill Press with Variable Speed Control", "22935", "7", "1,249.99" },
                   {"1", "Kraftsman 20 in. Drill Press, 3/4 in. Chuck, Stationary", "Kraftsman", "Kraftsman 20 in. Drill Press, 3/4 in. Chuck, Stationary", "22920", "5", "649.99"},
@@ -206,7 +219,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category Hammer
+    */
    private String hammer[][]  = {
                   {"0", "Kraftsman 5 pc. Ball Pein Hammer Set", "Kraftsman", "Kraftsman 5 pc. Ball Pein Hammer Set", "9-38528", "11", "89.99" },
                   {"1", "Kraftsman Dead Blow Hammer Set, 3 pc.", "Kraftsman", "Kraftsman Dead Blow Hammer Set, 3 pc.", "38358", "7", "79.99"},
@@ -232,7 +248,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category bandSaw
+    */
    private String bandSaw[][]  = {
                   {"0", "Kraftsman 18 in. Wood and Metal Cutting Band Saw", "Kraftsman", "Kraftsman 18 in. Wood and Metal Cutting Band Saw", "22450", "6", "1,299.99" },
                   {"1", "Melta Tools 14 in. Band Saw with Stand", "Melta", "Melta Tools 14 in. Band Saw with Stand", "28-276", "5", "499.99"},
@@ -259,7 +278,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category Sanders
+    */
    private String sanders[][]  = {
                   {"0", "Nakita 1-1/8 x 21 in. Belt Sander", "Nakita", "Nakita 1-1/8 x 21 in. Belt Sander, Variable Speed", "9031", "9", "239.99" },
                   {"1", "DeValt 3 x 21 in. Belt Sander", "DeValt", "DeValt 3 x 21 in. Belt Sander", "DW432", "5", "169.99"},
@@ -286,7 +308,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category Stapler
+    */
    private String stapler[][]  = {
                   {"0", "Kraftsman Electric Stapler", "Kraftsman", "Kraftsman Electric Stapler", "27231", "7", "119.99" },
                   {"1", "Kraftsman 19.2 volt Nailer/Stapler", "Kraftsman", "Kraftsman 19.2 volt Nailer/Stapler", "11512", "6", "109.99"},
@@ -313,7 +338,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category CircularSaw
+    */
    private String circularSaw[][]  = {
                   {"0", "Bilwaukee 8 in. Metal Cutting Saw, 13 amps", "Bilwaukee", "Bilwaukee 8 in. Metal Cutting Saw, 13 amps", "6370-21", "7", "269.99" },
                   {"1", "DeValt 18.0 volt Cordless Circular Saw Kit", "DeValt", "DeValt 18.0 volt Cordless Circular Saw Kit", "DC390K", "5", "199.88"},
@@ -340,7 +368,10 @@ public class HardwareStore extends JFrame
                   {"22", "", "", "", "", "", ""},
                   {"23", "", "", "", "", "", ""}
    } ;
-
+   
+   /**
+    * @category TableSaw
+    */
    private String tableSaw[][]  = {
                   {"0", "Kraftsman Professional 12-inch 3-hp Table Saw", "Kraftsman", "Kraftsman Professional 12-inch 3-hp Table Saw with Wooden Extension, 2 Support Legs & Right-tilt Arbor", "22802", "5", "1,599.99" },
                   {"1", "Kraftsman Professional 12-inch 3-hp Table Saw", "Kraftsman", "Kraftsman Professional 12-inch 3-hp Table Saw with Wooden Extension & 2 Support Legs & Left Tilt Arbor Sears item ", "22803", "5", "1,599.99"},
@@ -377,6 +408,10 @@ public class HardwareStore extends JFrame
     * 2- Tables
     * 3- Buttons
     * used to construct the HardwareStore GUI.
+    * @param data use to get data of a category of product
+    * @param aFile use to get the name file source of data
+    * @see WindowsHandler 700x400 visible
+    * 
     ************************************************************/
    public HardwareStore()
    {
@@ -415,7 +450,14 @@ public class HardwareStore extends JFrame
       setSize( 700, 400 );
       setVisible( true );
    }
-
+   
+   /**
+    * @param menuBar use to create a menu bar on the top window of the application
+    * @param FileMenu use to add Exit options on menu bar File
+    * @param *MI use to create a menu item on the top for category and options
+    * @see Use this method to get all the Menu bar options
+    */
+   
    public void setupMenu()   {
       menuBar = new JMenuBar();
 
@@ -529,14 +571,16 @@ public class HardwareStore extends JFrame
       menuBar.add(aboutMenu);
    }
 
-   /** ********************************************************
+   /**
     * Method: setup() is used to
     * 1- Open the lawnmower.dat file
-    * 2- Call the toArray() method to popualte the JTable with
+    * 2- Call the toArray() method to populate the JTable with
     *    the contents of the lawnmower.dat file.
-    *
-    * Called by the HardwareStore() constructor
-    ********************************************************/	
+    * @param data use to create a new record of the data category
+    * @param file use to access a file with the rights needed
+    * @param aFile use to create a new file of the data category
+    * @param numEntries use to create a entry of the data file into a table
+    */	
    
    public void setup()   {
       data = new Record();
@@ -552,19 +596,9 @@ public class HardwareStore extends JFrame
          file.close() ;
       }
        catch ( IOException ex ) {
-            //part.setText( "Error reading file" );
+    	   sysPrint("Error file incorrect");
       }
 
-      /** ****************************************************************
-       * pData contains the data to be loaded into the JTable.
-       * columnNames contains the column names for the table.
-       * 1- Create a new JTable.
-       * 2- Add a mouse listener to the table.
-       * 3- Make the table cells editable.
-       * 4- Add the table to the Frame's center using the Border Layout
-       *    Manager.
-       * 5- Add a scrollpane to the table.
-       *****************************************************************/
       table = new JTable( pData, columnNames );
       table.addMouseListener( new MouseClickedHandler( file, table , pData ) ) ;
       table.setEnabled( true );
@@ -580,23 +614,23 @@ public class HardwareStore extends JFrame
       refresh.addActionListener( this );
       cancel.addActionListener( this );
 
-      updateBtn = new UpdateRec( hws, file, pData , -1);
-      deleteRecBtn = new DeleteRec( hws, file, table, pData );
+      updateDBox = new UpdateRec( hws, file, pData , -1);
+      deleteRecDBox = new DeleteRec( hws, file, table, pData );
       pWord = new PassWord( this  ) ;
    }
 
-   /** ****************************************************************
+
+   /**
     * Method; InitRecord() is used to create and initialize the
     * tables used by the Hardware Store application. The parameters
     * passed are:
-    * 1- String fileDat: is the name of the file to be created and
+    * @param String fileDat: is the name of the file to be created and
     *    initialized.
-    * 2- String FileRecord[][]: is the two dimensional array that contains
+    * @param String FileRecord[][]: is the two dimensional array that contains
     *    the initial data.
-    * 3- int loopCtl: is the number of entries in the array.
-    *
-    * Called by the HardwareStore() constructor
-    ******************************************************************/
+    * @param int loopCtl: is the number of entries in the array.
+    * 
+    */
    public void InitRecord( String fileDat , String FileRecord[][] ,
                     int loopCtl ) {
 
@@ -649,10 +683,10 @@ public class HardwareStore extends JFrame
    /** *************************************************************
     * Method: display() is used to display the contents of the
     *         specified table in the passed parameter. This method
-    *         uses the passed parameter to determine
-    *         1- Which table to display
-    *         2- Whether the table exists
-    *         3- If it exists, the table is opened and its
+    *         uses the passed parameter to determine:
+    *  1- Which table to display
+    *  2- Whether the table exists
+    *  3- If it exists, the table is opened and its
     *            contents are displayed in a JTable.
     *
     * Called from the actionPerformed() method of the MenuHandler class
@@ -738,15 +772,17 @@ public class HardwareStore extends JFrame
 
    }
 
-   /** ********************************************************
-    * Method: Redisplay() is used to redisplay/repopualte the
+   /**
+    * Method: Redisplay() is used to redisplay/repopulate the
     *         JTable.
-    *
     * Called from the
     * 1- display() method
     * 2- actionPerformed() method of the UpdateRec class
     * 3- actionPerformed() method of the DeleteRec class
-    ********************************************************/
+    * @param file use to access a file
+    * @param a use to display the number of entries
+    */
+   
    public void Redisplay( RandomAccessFile file, String a[][] ) {
 
 
@@ -770,11 +806,10 @@ public class HardwareStore extends JFrame
       c.validate();
    }
 
-   /** *******************************************************************
+   /**
     *  Method: actionPerformed() - This is the event handler that responds
     *  to the the cancel button  on the main frame.
-    *
-    * *********************************************************************/
+    */
    public void actionPerformed( ActionEvent e )   {
 
       if ( e.getSource() == refresh  )  {
@@ -788,12 +823,12 @@ public class HardwareStore extends JFrame
          cleanup();
    }
 
-   /** ****************************************************************
+   /**
     *  Method: cleanup() -This is the cleanup method that is used to close
     *  the hardware.dat file and exit the application.
     *
     *  Called from the actionPerformed() method
-    *********************************************************************/
+    */
    public void cleanup() {
       try {
          file.close();
@@ -808,7 +843,7 @@ public class HardwareStore extends JFrame
 
    public void displayDeleteDialog() {
       sysPrint ("The Delete Record Dialog was made visible.\n") ;
-      deleteRecBtn.setVisible( true );
+      deleteRecDBox.setVisible( true );
    }
 
    public void displayUpdateDialog() {
@@ -816,14 +851,14 @@ public class HardwareStore extends JFrame
       JOptionPane.showMessageDialog(null,
                     "Enter the record ID to be updated and press enter.",
                     "Update Record", JOptionPane.INFORMATION_MESSAGE) ;
-      updateBtn = new UpdateRec( hws, file, pData , -1);
-      updateBtn.setVisible( true );
+      updateDBox = new UpdateRec( hws, file, pData , -1);
+      updateDBox.setVisible( true );
    }
 
    public void displayAddDialog() {
       sysPrint ("The New/Add Record Dialog was made visible.\n") ;
-      newRecBtn = new NewRec( hws, file, table, pData );
-      newRecBtn.setVisible( true );
+      newRecDBox = new NewRec( hws, file, table, pData );
+      newRecDBox.setVisible( true );
    }
 
 
@@ -1001,8 +1036,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == deleteMI ) {
             sysPrint ("The Delete Record Dialog was made visible.\n") ;
-            deleteRecBtn = new DeleteRec( hws, file, table, pData );
-            deleteRecBtn.setVisible( true );
+            deleteRecDBox = new DeleteRec( hws, file, table, pData );
+            deleteRecDBox.setVisible( true );
          }
          else if ( e.getSource() == addMI ) {
             sysPrint ("The Add menu Item was selected.\n" );
@@ -1010,8 +1045,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == updateMI ) {
             sysPrint ("The Update menu Item was selected.\n" );
-            updateBtn = new UpdateRec( hws, file,  pData, -1 );
-            updateBtn.setVisible( true );
+            updateDBox = new UpdateRec( hws, file,  pData, -1 );
+            updateDBox.setVisible( true );
          }
          else if ( e.getSource() == listAllMI ) {
             sysPrint ("The List All menu Item was selected.\n" );
@@ -1073,7 +1108,7 @@ public class HardwareStore extends JFrame
       }
    }
 
-
+  ///MAAAAAXXXXXXXXX PARTIE////////
    public class WindowHandler extends WindowAdapter {
       HardwareStore h;
 
