@@ -1,4 +1,3 @@
-package HardwareStore;
 /** ***************************************************
  * File:  HardwareStore.java
  *
@@ -840,7 +839,7 @@ public class HardwareStore extends JFrame
       setVisible( false );
       System.exit( 0 );
    }
-
+   
    public void displayDeleteDialog() {
       sysPrint ("The Delete Record Dialog was made visible.\n") ;
       deleteRecDBox.setVisible( true );
@@ -861,28 +860,38 @@ public class HardwareStore extends JFrame
       newRecDBox.setVisible( true );
    }
 
-
+   /**
+    * @param ent use to determine the number of entries
+    */
    public void setEntries( int ent )   {
       numEntries = ent ;
    }
 
-
+   /**
+    * @param ii use to get first index of pData
+    * @param iii use to get second index of pData
+    * @return pData in a table
+    */
    public String getPData( int ii , int iii )   {
       return pData[ ii ] [ iii ] ;
    }
 
-   /** ********************************************************
+   /**
     *  Method: getEntries() returns the number of current entries
     *          in the pData array.
     *
     * Called from
     * 1- actionPerformed() method of the NewRec class
     * 2- actionPerformed() method of the DeleteRec class
-    ********************************************************/
+    * @return numEntries which is the number of entries
+    */
    public int getEntries(  )   {
       return numEntries  ;
    }
-
+   
+   /**
+    * @param str String to print to see the debug error
+    */
    public void sysPrint( String str  )   {
       if ( myDebug ) {
          System.out.println( str );
