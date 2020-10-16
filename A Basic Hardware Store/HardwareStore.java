@@ -1,4 +1,4 @@
-/** ***************************************************
+** ***************************************************
  * File:  HardwareStore.java
  *
  *    This program reads a random access file sequentially,
@@ -53,18 +53,19 @@ import java.lang.Runtime;
  * deleted.</p>
  * <p>Copyright: Copyright (c)</p>
  * <p>Company: TAW</p>
- * @author unascribed
+ * @author
  * @version 2.0
  */
 
 public class HardwareStore extends JFrame
           implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	
 
    private PassWord pWord;
-   private UpdateRec update;
-   private NewRec    newRec;
-   private DeleteRec deleteRec;
+   private UpdateRec updateBtn;
+   private NewRec    newRecBtn;
+   private DeleteRec deleteRecBtn;
    private Record data;
    private String pData[] []  = new String [ 250 ] [ 7 ];
    private JMenuBar menuBar ;
@@ -535,7 +536,8 @@ public class HardwareStore extends JFrame
     *    the contents of the lawnmower.dat file.
     *
     * Called by the HardwareStore() constructor
-    ********************************************************/
+    ********************************************************/	
+   
    public void setup()   {
       data = new Record();
 
@@ -578,8 +580,8 @@ public class HardwareStore extends JFrame
       refresh.addActionListener( this );
       cancel.addActionListener( this );
 
-      update = new UpdateRec( hws, file, pData , -1);
-      deleteRec = new DeleteRec( hws, file, table, pData );
+      updateBtn = new UpdateRec( hws, file, pData , -1);
+      deleteRecBtn = new DeleteRec( hws, file, table, pData );
       pWord = new PassWord( this  ) ;
    }
 
@@ -806,7 +808,7 @@ public class HardwareStore extends JFrame
 
    public void displayDeleteDialog() {
       sysPrint ("The Delete Record Dialog was made visible.\n") ;
-      deleteRec.setVisible( true );
+      deleteRecBtn.setVisible( true );
    }
 
    public void displayUpdateDialog() {
@@ -814,14 +816,14 @@ public class HardwareStore extends JFrame
       JOptionPane.showMessageDialog(null,
                     "Enter the record ID to be updated and press enter.",
                     "Update Record", JOptionPane.INFORMATION_MESSAGE) ;
-      update = new UpdateRec( hws, file, pData , -1);
-      update.setVisible( true );
+      updateBtn = new UpdateRec( hws, file, pData , -1);
+      updateBtn.setVisible( true );
    }
 
    public void displayAddDialog() {
       sysPrint ("The New/Add Record Dialog was made visible.\n") ;
-      newRec = new NewRec( hws, file, table, pData );
-      newRec.setVisible( true );
+      newRecBtn = new NewRec( hws, file, table, pData );
+      newRecBtn.setVisible( true );
    }
 
 
@@ -999,8 +1001,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == deleteMI ) {
             sysPrint ("The Delete Record Dialog was made visible.\n") ;
-            deleteRec = new DeleteRec( hws, file, table, pData );
-            deleteRec.setVisible( true );
+            deleteRecBtn = new DeleteRec( hws, file, table, pData );
+            deleteRecBtn.setVisible( true );
          }
          else if ( e.getSource() == addMI ) {
             sysPrint ("The Add menu Item was selected.\n" );
@@ -1008,8 +1010,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == updateMI ) {
             sysPrint ("The Update menu Item was selected.\n" );
-            update = new UpdateRec( hws, file,  pData, -1 );
-            update.setVisible( true );
+            updateBtn = new UpdateRec( hws, file,  pData, -1 );
+            updateBtn.setVisible( true );
          }
          else if ( e.getSource() == listAllMI ) {
             sysPrint ("The List All menu Item was selected.\n" );

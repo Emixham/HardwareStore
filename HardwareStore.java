@@ -60,11 +60,12 @@ import java.lang.Runtime;
 public class HardwareStore extends JFrame
           implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	
 
-   private PassWord pWord;     
-   private UpdateRec update;    
-   private NewRec    newRec;     
-   private DeleteRec deleteRec;  
+   private PassWord pWord;
+   private UpdateRec updateBtn;
+   private NewRec    newRecBtn;
+   private DeleteRec deleteRecBtn;
    private Record data;
    private String pData[] []  = new String [ 250 ] [ 7 ];
    private JMenuBar menuBar ;
@@ -75,17 +76,17 @@ public class HardwareStore extends JFrame
                sandMI, stapMI, wdvMI, sccMI;
    private JMenuItem deleteMI, addMI, updateMI, listAllMI ;
    private JMenuItem debugON, debugOFF ;
-   
+
    private JMenuItem   helpHWMI ;
    private JMenuItem   aboutHWMI ;
    private MenuHandler menuHandler = new MenuHandler();
    private JTable table;
-   private RandomAccessFile file;  
+   private RandomAccessFile file;
    private File aFile ;
    private JButton cancel, refresh;
    private JPanel buttonPanel ;
    protected boolean validPW = false ;
-   private boolean myDebug = false ; 
+   private boolean myDebug = false ;
    HardwareStore hws ;
 
    private String columnNames[] = {"Record ID", "Type of tool",
@@ -417,7 +418,7 @@ public class HardwareStore extends JFrame
 
    public void setupMenu()   {
       menuBar = new JMenuBar();
-      
+
       setJMenuBar(menuBar);
 
       fileMenu = new JMenu("File");
@@ -535,7 +536,8 @@ public class HardwareStore extends JFrame
     *    the contents of the lawnmower.dat file.
     *
     * Called by the HardwareStore() constructor
-    ********************************************************/
+    ********************************************************/	
+   
    public void setup()   {
       data = new Record();
 
@@ -578,8 +580,8 @@ public class HardwareStore extends JFrame
       refresh.addActionListener( this );
       cancel.addActionListener( this );
 
-      update = new UpdateRec( hws, file, pData , -1);
-      deleteRec = new DeleteRec( hws, file, table, pData );
+      updateBtn = new UpdateRec( hws, file, pData , -1);
+      deleteRecBtn = new DeleteRec( hws, file, table, pData );
       pWord = new PassWord( this  ) ;
    }
 
@@ -711,7 +713,7 @@ public class HardwareStore extends JFrame
       }
 
       try {
-        
+
          sysPrint("display(): 1a - checking to see if " + df + " exists." );
          if ( !aFile.exists() ) {
 
@@ -806,7 +808,7 @@ public class HardwareStore extends JFrame
 
    public void displayDeleteDialog() {
       sysPrint ("The Delete Record Dialog was made visible.\n") ;
-      deleteRec.setVisible( true );
+      deleteRecBtn.setVisible( true );
    }
 
    public void displayUpdateDialog() {
@@ -814,14 +816,14 @@ public class HardwareStore extends JFrame
       JOptionPane.showMessageDialog(null,
                     "Enter the record ID to be updated and press enter.",
                     "Update Record", JOptionPane.INFORMATION_MESSAGE) ;
-      update = new UpdateRec( hws, file, pData , -1);
-      update.setVisible( true );
+      updateBtn = new UpdateRec( hws, file, pData , -1);
+      updateBtn.setVisible( true );
    }
 
    public void displayAddDialog() {
       sysPrint ("The New/Add Record Dialog was made visible.\n") ;
-      newRec = new NewRec( hws, file, table, pData );
-      newRec.setVisible( true );
+      newRecBtn = new NewRec( hws, file, table, pData );
+      newRecBtn.setVisible( true );
    }
 
 
@@ -915,8 +917,8 @@ public class HardwareStore extends JFrame
 
                 ii++;
 
-            }  
-         }  
+            }
+         }
       }
       catch ( IOException ex ) {
                 sysPrint(  "toArray(): 6 - input data file failure. Index is " +  ii
@@ -999,8 +1001,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == deleteMI ) {
             sysPrint ("The Delete Record Dialog was made visible.\n") ;
-            deleteRec = new DeleteRec( hws, file, table, pData );
-            deleteRec.setVisible( true );
+            deleteRecBtn = new DeleteRec( hws, file, table, pData );
+            deleteRecBtn.setVisible( true );
          }
          else if ( e.getSource() == addMI ) {
             sysPrint ("The Add menu Item was selected.\n" );
@@ -1008,8 +1010,8 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == updateMI ) {
             sysPrint ("The Update menu Item was selected.\n" );
-            update = new UpdateRec( hws, file,  pData, -1 );
-            update.setVisible( true );
+            updateBtn = new UpdateRec( hws, file,  pData, -1 );
+            updateBtn.setVisible( true );
          }
          else if ( e.getSource() == listAllMI ) {
             sysPrint ("The List All menu Item was selected.\n" );
@@ -1071,21 +1073,12 @@ public class HardwareStore extends JFrame
       }
    }
 
-   
-   /** ********************************************************
-    *  class: WindowHandler
-    ********************************************************/
+
    public class WindowHandler extends WindowAdapter {
       HardwareStore h;
 
-      /** ********************************************************
-       *  Method: WindowHandler()
-       ********************************************************/
       public WindowHandler( HardwareStore s ) { h = s; }
 
-      /** ********************************************************
-       *  Method: windowClosing()
-       ********************************************************/
       public void windowClosing( WindowEvent e ) { h.cleanup(); }
    }
 
@@ -1101,12 +1094,13 @@ public class HardwareStore extends JFrame
    public class PassWord  extends Dialog
          implements ActionListener {
 
-      private JButton cancel , enter;
+
+	private static final long serialVersionUID = 7151972607301955074L;
+	private JButton cancel , enter;
       private JTextField userID ;
       private JLabel userIDLabel, passwordLabel ;
       private JPasswordField password ;
       private JPanel buttonPanel, mainPanel ;
-      private Container c ;
       private HardwareStore hwStore ;
       private String whichDialog ;
 
@@ -1123,38 +1117,32 @@ public class HardwareStore extends JFrame
 
          hwStore = hw_Store ;
 
-         /** Create the Enter and Cancel Buttons */
+         /** Create the buttonPanel and the mainPanel */
          enter = new JButton( "Enter" );
          cancel = new JButton( "Cancel" );
 
-         /** Create the buttonPanel and the mainPanel */
+
          buttonPanel = new JPanel() ;
          mainPanel   = new JPanel() ;
 
-         /** declare the GridLayout manager for the mainPanel */
          mainPanel.setLayout( new GridLayout( 3, 2 ) );
          add( mainPanel , BorderLayout.CENTER) ;
 
-         /** Create the text fields */
          userID         = new JTextField( 10 );
          password       = new JPasswordField( 10 );
 
-         /** Create the labels */
          userIDLabel    = new JLabel( "Enter your user ID" );
          passwordLabel  = new JLabel( "Enter your user password" );
 
-         /** add the labels and text fields to the main panel */
          mainPanel.add( userIDLabel );
          mainPanel.add( userID );
          mainPanel.add( passwordLabel );
          mainPanel.add( password );
 
-         /** add the buttons to the button panel */
          buttonPanel.add( enter ) ;
          buttonPanel.add( cancel ) ;
          add( buttonPanel , BorderLayout.SOUTH);
 
-         /** add the actionlisteners to the buttons */
          enter.addActionListener( this );
          cancel.addActionListener( this );
 
@@ -1228,29 +1216,19 @@ public class HardwareStore extends JFrame
          clear();
       }
 
-      /** ********************************************************
-       *  Method: clear()
-       ********************************************************/
       private void clear()    {
          setVisible( false );
          return ;
       }
 
    }
-   /************ This end of the PassWord class **************/
 
-
-   /** ********************************************************
-    *  Class:
-    ********************************************************/
    public class MouseClickedHandler extends MouseAdapter {
       JTable table;
       String pData[] [], columnNames[] ;
       RandomAccessFile f ;
 
-   /** ********************************************************
-    *  Method:
-    ********************************************************/
+
       MouseClickedHandler( RandomAccessFile fPassed , JTable tablePassed ,
                     String p_Data[] []) {
           table = tablePassed ;
@@ -1258,9 +1236,7 @@ public class HardwareStore extends JFrame
           f     = fPassed ;
 
       }
-   /** ********************************************************
-    *  Method: mouseClicked()
-    ********************************************************/
+
       public void mouseClicked( MouseEvent e )    {
          if ( e.getSource() == table) {
              int ii = table.getSelectedRow() ;
@@ -1276,11 +1252,10 @@ public class HardwareStore extends JFrame
       }
    }
 
-   /** ********************************************************
-    * class: UpdateRec
-    ********************************************************/
    public class UpdateRec extends Dialog  implements ActionListener {
-      private RandomAccessFile file;
+
+	private static final long serialVersionUID = -71014719669390773L;
+	private RandomAccessFile file;
       private JTextField recID, toolType, brandName, toolDesc,
                 partNum, quantity, price;
       private JLabel recIDLabel,  toolTypeLabel, brandNameLabel,
@@ -1288,14 +1263,11 @@ public class HardwareStore extends JFrame
                     priceLabel;
       private JButton cancel, save;
       private Record data;
-      private int theRecID, ii, iii, toCont, loopCtrl;
+      private int theRecID,toCont,ii;
       private String pData [] [] ;
       private HardwareStore hwstore ;
       private boolean found = false ;
 
-      /** ********************************************************
-       * Method: UpdateRec()
-       ********************************************************/
       public UpdateRec( HardwareStore hw_store, RandomAccessFile f ,
                     String p_Data [] [], int iiPassed)
       {
@@ -1318,7 +1290,6 @@ public class HardwareStore extends JFrame
        ********************************************************/
       public void upDSetup() {
 
-         /** create the text fields */
          recID      = new JTextField( 10 );
          toolType   = new JTextField( 10 );
          brandName  = new JTextField( 10 );
@@ -1327,7 +1298,6 @@ public class HardwareStore extends JFrame
          quantity   = new JTextField( 10 );
          price      = new JTextField( 10 );
 
-         /** create the labels */
          recIDLabel     = new JLabel( "Record ID" );
          toolTypeLabel  = new JLabel( "Type of Tool" );
          brandNameLabel = new JLabel( "Brand Name" );
@@ -1336,17 +1306,13 @@ public class HardwareStore extends JFrame
          quantityLabel  = new JLabel( "Quantity" );
          priceLabel     = new JLabel( "Price" );
 
-         /** create the buttons */
          save = new JButton( "Save Changes" );
          cancel = new JButton( "Cancel" );
 
-         /** attach the ActionListener */
          recID.addActionListener( this );
          save.addActionListener( this );
          cancel.addActionListener( this );
 
-         /** Add the labels and text fields to the
-          *  GridLayout manager context */
          add( recIDLabel );
          add( recID );
          add( toolTypeLabel );
@@ -1423,7 +1389,7 @@ public class HardwareStore extends JFrame
             try {
 
                file = new RandomAccessFile( hwstore.aFile , "rw" );
-               file.seek( ( theRecID  ) * data.getSize() );
+               file.seek( ( theRecID  ) * Record.getSize() );
                data.ReadRec( file );
 
                recID.setText( "" + theRecID );
@@ -1445,13 +1411,13 @@ public class HardwareStore extends JFrame
             }
 
             if ( data.getRecID() >= 0 ) {
-               /*recID.setText( String.valueOf( data.getRecID() ) );
+               recID.setText( String.valueOf( data.getRecID() ) );
                toolType.setText( data.getToolType().trim() );
                brandName.setText( data.getBrandName().trim() ) ;
                toolDesc.setText( data.getToolDesc().trim() ) ;
                partNum.setText( data.getPartNumber().trim() ) ;
                quantity.setText( Integer.toString( data.getQuantity() ) );
-               price.setText(  data.getCost().trim() ); */
+               price.setText(  data.getCost().trim() );
             }
             else
                recID.setText(  "This record " +
@@ -1468,7 +1434,7 @@ public class HardwareStore extends JFrame
                data.setCost(  price.getText().trim()  );
 
                file.seek( 0 ) ;
-               file.seek(  theRecID   * data.getSize() );
+               file.seek(  theRecID   * Record.getSize() );
                data.write( file );
 
                System.out.println( "UpdateRec(): 3 - The record found was " +
@@ -1509,9 +1475,6 @@ public class HardwareStore extends JFrame
          }
       }
 
-      /** ********************************************************
-       * Method: upClear()
-       ********************************************************/
       private void upClear()   {
          recID.setText( "" );
          brandName.setText( "" );
@@ -1521,13 +1484,10 @@ public class HardwareStore extends JFrame
       }
    }
 
-   /** ********************************************************
-    * class NewRec is used to gather and insert data for new
-    * hardware item records.
-    ********************************************************/
    public class NewRec extends Dialog  implements ActionListener {
 
-      private RandomAccessFile file;
+	private static final long serialVersionUID = 5388111109187939875L;
+	private RandomAccessFile file;
       private JTextField recID, toolType, brandName, toolDesc,
                 partNum, quantity, price;
       private JLabel recIDLabel,  toolTypeLabel, brandNameLabel,
@@ -1584,7 +1544,7 @@ public class HardwareStore extends JFrame
          try {
             file = new RandomAccessFile( hwStore.aFile , "rw" ) ;
             file.seek( 0 );
-            fileLen = (int)file.length() / data.getSize() ;
+            fileLen = (int)file.length() / Record.getSize() ;
             recID.setText( "" + fileLen ) ;
          }
          catch ( IOException ex ) {
@@ -1645,7 +1605,7 @@ public class HardwareStore extends JFrame
          try {
             file = new RandomAccessFile( hwStore.aFile , "rw" ) ;
             file.seek( 0 );
-            fileLen = (int)file.length() / data.getSize() ;
+            fileLen = (int)file.length() / Record.getSize() ;
             recID.setText( "" + fileLen ) ;
          }
          catch ( IOException ex ) {
@@ -1657,11 +1617,11 @@ public class HardwareStore extends JFrame
          }
          else if ( e.getSource() == save ) {
             if ( recID.getText().equals("") ) {
-               /*JOptionPane.showMessageDialog(null,
+               JOptionPane.showMessageDialog(null,
                     "A recID entered was:  null or blank, which is invalid.\n" +
                     "Please enter a number greater than 0 and less than 251.", "RecID Entered",
                     JOptionPane.INFORMATION_MESSAGE) ;
-               return ; */
+               return ;
             }
             else {
                try {
@@ -1673,7 +1633,7 @@ public class HardwareStore extends JFrame
                   data.setQuantity( Integer.parseInt( quantity.getText() ) );
                   data.setCost(  price.getText().trim()  );
                   file.seek( 0 ) ;
-                  file.seek( ( data.getRecID()) * data.getSize() );
+                  file.seek( ( data.getRecID()) * Record.getSize() );
                   data.write( file );
 
                   // Account for index starting at 0 and for the next slot
@@ -1696,8 +1656,8 @@ public class HardwareStore extends JFrame
                catch ( IOException ex ) {
                   partNum.setText( "Error writing file" );
                   return;
-               }  // End of try-catch block
-            }  // End of inner if
+               }
+            }
 
             toCont = JOptionPane.showConfirmDialog(null,
                    "Do you want to add another record? \nChoose one",
@@ -1722,10 +1682,6 @@ public class HardwareStore extends JFrame
          }
       }
 
-      /** ********************************************************
-       * Method: newClear() is used to cleanup and exit the NewRecord
-       *         dialog.
-       ********************************************************/
       private void newClear()   {
          partNum.setText( "" );
          toolType.setText( "" );
@@ -1733,6 +1689,14 @@ public class HardwareStore extends JFrame
          price.setText( "" );
          setVisible( false );
       }
+
+	public boolean isFound() {
+		return found;
+	}
+
+	public void setFound(boolean found) {
+		this.found = found;
+	}
    }
 
    /** ***************************************************************
@@ -1742,22 +1706,18 @@ public class HardwareStore extends JFrame
     ******************************************************************/
    public class DeleteRec extends Dialog
           implements ActionListener {
-      private RandomAccessFile file;
+	private static final long serialVersionUID = 9086608621851351580L;
+	private RandomAccessFile file;
       private JTextField recID;
       private JLabel recIDLabel;
       private JButton cancel, delete;
       private Record data;
-      private int partNum;
       private int theRecID =  -1 , toCont ;
-      private JTable table ;
       private String pData[] [] ;
       private HardwareStore hwStore  ;
       private boolean found = false ;
 
-      /** ********************************************************
-       * Method: DeleteRec() constructor is used to initialize the
-       * DeleteRec class/dialog.
-       ********************************************************/
+
       public DeleteRec( HardwareStore hw_store,  RandomAccessFile f,
                    JTable tab, String p_Data[] []  )  {
 
@@ -1817,7 +1777,7 @@ public class HardwareStore extends JFrame
                try {
                   file = new RandomAccessFile( hwStore.aFile , "rw" );
 
-                  file.seek(  theRecID * data.getSize() );
+                  file.seek(  theRecID * Record.getSize() );
                   data.ReadRec( file );
                   System.out.println( "DeleteRec(): 1b - The record read is recid " +
                              data.getRecID() + " " +
@@ -1830,9 +1790,6 @@ public class HardwareStore extends JFrame
                catch ( IOException ex ) {
                   recID.setText( "Error reading file" );
                }
-
-               // if ( data.getRecID() == 0 )
-                 // recID.setText( partNum + " does not exist" );
             }
          }
          else if ( e.getSource() == delete ) {
@@ -1841,7 +1798,7 @@ public class HardwareStore extends JFrame
             for ( int iii = 0;  iii < pData.length ; iii++ ) {
                if ( (pData[ iii  ] [ 0 ] ).equals( "" + theRecID ) ) {
                   theRecID = Integer.parseInt( pData[ iii  ] [ 0 ] ) ;
-                  found = true ;
+                  setFound(true) ;
                   System.out.println( "DeleteRec(): 2 - The record id was found is  "
                             +  pData[ iii  ] [ 0 ] ) ;
                   break ;
@@ -1853,25 +1810,18 @@ public class HardwareStore extends JFrame
                System.out.println( "DeleteRec(): 3 - The data file is " + hwStore.aFile +
                  "The record to be deleted is " +  theRecID) ;
                file = new RandomAccessFile( hwStore.aFile , "rw" );
-               //theRecID =  Integer.parseInt( recID.getText() ) ;
                data.setRecID( theRecID ) ;
 
                hwStore.setEntries( hwStore.getEntries() - 1 );
                System.out.println( "DeleteRec(): 4 - Go to the beginning of the file.") ;
                file.seek( ( 0 )  );
-               file.seek( ( theRecID ) * data.getSize() );
+               file.seek( ( theRecID ) * Record.getSize() );
                data.ReadRec( file );
                System.out.println( "DeleteRec(): 5 - Go to the record " + theRecID + " to be deleted.") ;
                data.setRecID( -1 ) ;
-              /* data.setToolType(  " " ) ;
-               data.setBrandName(  " " )  ;
-               data.setToolDesc(   " " ) ;
-               data.setPartNumber(  " " )  ;
-               data.setQuantity(   0 ) ;
-               data.setCost(   " " )  ;  */
                System.out.println( "DeleteRec(): 6 - Write the deleted file to the file.") ;
                file.seek( ( 0 )  );
-               file.seek( ( theRecID ) * data.getSize() );
+               file.seek( ( theRecID ) * Record.getSize() );
                data.writeInteger( file , -1 );
 
                System.out.println( "DeleteRec(): 7 - The number of entries is " +
@@ -1922,6 +1872,14 @@ public class HardwareStore extends JFrame
          setVisible( false );
          recID.setText( "" );
       }
+
+	public boolean isFound() {
+		return found;
+	}
+
+	public void setFound(boolean found) {
+		this.found = found;
+	}
    }
 }
 
